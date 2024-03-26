@@ -1,15 +1,6 @@
-# Makefile
-
-IMAGE_NAME = go-games-api
-IMAGE_TAG = latest
-
-.PHONY: run test build
-
-run:
-	go run main.go
-
-test:
-	go test -v .
-
 build:
-	docker build -t $(IMAGE_NAME):$(IMAGE_TAG) .
+	docker build -t go-games-api .
+run:
+	docker run --rm -p 8080:8080 go-games-api
+test:
+	docker run --rm go-games-api go test -v ./...

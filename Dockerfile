@@ -1,34 +1,26 @@
-# Dockerfile
+# Use the official Golang image as the base image
+FROM golang:1.21.6-alpine
 
-# Use the official Golang image as base
-FROM golang:1.17 AS builder
-
-# Set the working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the Go modules dependency files
+# Copy the Go module files
 COPY go.mod go.sum ./
 
-# Download and install Go dependencies
+# Download the Go module dependencies
 RUN go mod download
 
-# Copy the source code into the container
+# Copy the rest of the application code
 COPY . .
 
+# Copy the games.json file
+COPY games.json .
+
 # Build the Go application
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
+RUN go build -o main
 
-# Use a minimal base image for the final runtime image
-FROM alpine:latest
+# Expose the port your application listens on (if applicable)
+# EXPOSE 8080
 
-# Set the working directory
-WORKDIR /root/
-
-# Copy the compiled Go binary from the builder stage
-COPY --from=builder /app/app .
-
-# Expose the port the application runs on
-EXPOSE 8080
-
-# Command to run the executable
-CMD ["./app"]
+# Command to run your application
+CMD ["./main"]
