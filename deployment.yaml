@@ -1,19 +1,41 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: go-games-api
+  name: go-games-deployment
+  labels:
+    app: go-games
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: go-games-api
+      app: go-games
   template:
     metadata:
       labels:
-        app: go-games-api
+        app: go-games
     spec:
       containers:
-      - name: go-games-api
-        image: your-docker-registry/go-games-api:latest
+      - name: go-games
+        image: go-games-api:latest
         ports:
-        - containerPort: 8080
+        - containerPort: 8080  # Assuming your application listens on port 8080
+        # Add volume mounts if needed
+        # volumeMounts:
+        # - name: your-volume-name
+        #   mountPath: /path/in/container
+      # Add volumes if needed
+      # volumes:
+      # - name: your-volume-name
+      #   hostPath:
+      #     path: /path/on/host
+      initContainers:
+      - name: fetch-dependencies
+        image: golang:1.21.6-alpine
+        command: ["go", "mod", "download"]
+        volumeMounts:
+        - name: go-modules
+          mountPath: /go
+      volumes:
+      - name: go-modules
+        emptyDir: {}
+
