@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-games-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: go-games-api
+  template:
+    metadata:
+      labels:
+        app: go-games-api
+    spec:
+      containers:
+      - name: go-games-api
+        image: your-docker-registry/go-games-api:latest
+        ports:
+        - containerPort: 8080
