@@ -1,0 +1,33 @@
+[
+    {
+      "id": 1,
+      "title": "The Witcher 3: Wild Hunt",
+      "description": "An action role-playing game developed and published by CD Projekt Red.",
+      "currentPrice": 29.99,
+      "sellerName": "GOG",
+      "developerName": "CD Projekt Red",
+      "publisherName": "CD Projekt",
+      "thumbnailURL": "https://example.com/witcher.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Grand Theft Auto V",
+      "description": "An action-adventure game developed by Rockstar North and published by Rockstar Games.",
+      "currentPrice": 39.99,
+      "sellerName": "Steam",
+      "developerName": "Rockstar North",
+      "publisherName": "Rockstar Games",
+      "thumbnailURL": "https://example.com/gta5.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Red Dead Redemption 2",
+      "description": "An action-adventure game developed and published by Rockstar Games.",
+      "currentPrice": 49.99,
+      "sellerName": "Epic Games Store",
+      "developerName": "Rockstar Games",
+      "publisherName": "Rockstar Games",
+      "thumbnailURL": "https://example.com/rdr2.jpg"
+    }
+  ]
+  
