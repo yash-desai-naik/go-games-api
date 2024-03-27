@@ -7,13 +7,12 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
 type Game struct {
-	ID            int     `json:"id"`
+	ID            string  `json:"id"`
 	Title         string  `json:"title"`
 	Description   string  `json:"description"`
 	CurrentPrice  float64 `json:"currentPrice"`
@@ -21,6 +20,16 @@ type Game struct {
 	DeveloperName string  `json:"developerName"`
 	PublisherName string  `json:"publisherName"`
 	ThumbnailURL  string  `json:"thumbnailURL"`
+}
+
+type GameData struct {
+	Data struct {
+		Catalog struct {
+			SearchStore struct {
+				Elements []Game `json:"elements"`
+			} `json:"searchStore"`
+		} `json:"Catalog"`
+	} `json:"data"`
 }
 
 var games []Game
@@ -38,16 +47,19 @@ func main() {
 }
 
 func listGames(c *gin.Context) {
-	c.JSON(http.StatusOK, games)
+	var gameList []gin.H
+	for _, game := range games {
+		gameList = append(gameList, gin.H{
+			"id":          game.ID,
+			"title":       game.Title,
+			"description": game.Description,
+		})
+	}
+	c.JSON(http.StatusOK, gameList)
 }
 
 func getGameByID(c *gin.Context) {
-	idStr := c.Query("id")
-	id, err := strconv.Atoi(idStr)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
-		return
-	}
+	id := c.Query("id")
 
 	for _, game := range games {
 		if game.ID == id {
@@ -65,8 +77,11 @@ func loadGamesFromJSON(filename string) {
 		log.Fatalf("Failed to read file %s: %v", filename, err)
 	}
 
-	err = json.Unmarshal(data, &games)
+	var gameData GameData
+	err = json.Unmarshal(data, &gameData)
 	if err != nil {
 		log.Fatalf("Failed to parse JSON data: %v", err)
 	}
+
+	games = gameData.Data.Catalog.SearchStore.Elements
 }

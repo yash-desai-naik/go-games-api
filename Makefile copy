@@ -1,0 +1,10 @@
+test: # this should produce output from your tests
+
+
+build: # this should produce a container image for your web server
+
+
+run: # this should run your web server container on localhost:8080
+
+
+kubernetes: # this should output a valid Kubernetes spec for your web service
