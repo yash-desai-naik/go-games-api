@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: go-games
-        image: <YOUR-Dockerhub-USERNAME>/go-games-api
+        image: ${DOCKERHUB_USERNAME}/${IMAGE_NAME}
 ---
 apiVersion: v1
 kind: Service
@@ -31,7 +31,7 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8080  
+      targetPort: 8080 
       nodePort: 30080
 
 ---

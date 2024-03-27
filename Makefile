@@ -1,8 +1,5 @@
 # Makefile for Go Games API
-
-# Variables
-IMAGE_NAME = go-games-api
-DOCKERHUB_USERNAME = "<YOUR-Dockerhub-USERNAME>"
+include .env
 
 # Build Docker image
 build:
@@ -10,7 +7,8 @@ build:
 
 # Push Docker image to Docker Hub
 push:
-	docker login 
+	@if ! docker info >/dev/null 2>&1; then echo "Docker is not running."; exit 1; fi
+	@if ! docker info | grep -q "Username: $(DOCKERHUB_USERNAME)"; then docker login -u $(DOCKERHUB_USERNAME); fi
 	docker push $(DOCKERHUB_USERNAME)/$(IMAGE_NAME):latest
 
 # Run Docker container
