@@ -2,7 +2,7 @@
 
 # Variables
 IMAGE_NAME = go-games-api
-DOCKERHUB_USERNAME = "mishrasharad332"
+DOCKERHUB_USERNAME = ""
 
 # Build Docker image
 build:
