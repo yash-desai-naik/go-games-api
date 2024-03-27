@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: go-games
-        image: <YOUR-GITHUB-USERNAME>/go-games-api
+        image: <YOUR-Dockerhub-USERNAME>/go-games-api
 ---
 apiVersion: v1
 kind: Service
