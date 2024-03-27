@@ -20,7 +20,7 @@ COPY games.json .
 RUN go build -o main
 
 # Expose the port your application listens on (if applicable)
-# EXPOSE 8080
+EXPOSE 8080
 
 # Command to run your application
 CMD ["./main"]
