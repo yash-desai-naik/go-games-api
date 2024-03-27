@@ -19,7 +19,6 @@ spec:
       - name: go-games
         image: mishrasharad332/go-games-api
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
