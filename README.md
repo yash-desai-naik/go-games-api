@@ -1,5 +1,5 @@
 ### Setup
-1. create `.evn` file from `.env.example`
+1. create `.evn` file from `env.example`
 2. mention you `DOCKERHUB_USERNAME`
 3. run following commands:
 
