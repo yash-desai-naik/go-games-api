@@ -1,20 +1,35 @@
+# Makefile for Go Games API
+
 # Variables
 IMAGE_NAME = go-games-api
-DOCKER_RUN_OPTIONS = --rm -p 8080:8080
-KUBECTL = kubectl
+DOCKERHUB_USERNAME = "mishrasharad332"
 
+# Build Docker image
 build:
-	docker build -t go-games-api .
+	docker build -t $(DOCKERHUB_USERNAME)/$(IMAGE_NAME):latest .
+
+# Push Docker image to Docker Hub
+push:
+	docker login 
+	docker push $(DOCKERHUB_USERNAME)/$(IMAGE_NAME):latest
+
+# Run Docker container
 run:
-	docker run --rm -p 8080:8080 go-games-api
+	docker run -d -p 8080:8080 $(DOCKERHUB_USERNAME)/$(IMAGE_NAME):latest
+
+# Test the application
 test:
-	docker run --rm go-games-api go test -v ./...
+	docker run --rm -p 8081:8080 $(DOCKERHUB_USERNAME)/$(IMAGE_NAME):latest go test -v ./...
+
 # Deploy to Kubernetes cluster
 deploy:
-	$(KUBECTL) apply -f deployment.yaml
-	$(KUBECTL) apply -f service.yaml
+	@kubectl get namespace go-games >/dev/null 2>&1 || kubectl create namespace go-games
+	kubectl apply -f deployments.yaml
 
 # Delete from Kubernetes cluster
 undeploy:
-	$(KUBECTL) delete -f deployment.yaml
-	$(KUBECTL) delete -f service.yaml
+	kubectl delete -f deployments.yaml
+
+# List number of pods running
+pods:
+	kubectl get pods --namespace=go-games
