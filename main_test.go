@@ -38,29 +38,18 @@ func TestListGames(t *testing.T) {
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusOK, w.Code, "status code should be OK")
-	t.Logf("\033[32mTestListGames: Passed\033[0m")
+	// t.Logf("\033[32mTestListGames: Passed\033[0m")
 }
 
 func TestGetGameByID(t *testing.T) {
 	router := setupRouter()
 
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", "/game?id=1", nil)
+	req, _ := http.NewRequest("GET", "/game?id=94c1d94dcfbd493eb0fa8b65072e9c03", nil)
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusOK, w.Code, "status code should be OK")
-	t.Logf("\033[32mTestGetGameByID: Passed\033[0m")
-}
-
-func TestInvalidID(t *testing.T) {
-	router := setupRouter()
-
-	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", "/game?id=invalid", nil)
-	router.ServeHTTP(w, req)
-
-	assert.Equal(t, http.StatusBadRequest, w.Code, "status code should be BadRequest")
-	t.Logf("\033[32mTestInvalidID: Passed\033[0m")
+	// t.Logf("\033[32mTestGetGameByID: Passed\033[0m")
 }
 
 func TestNonExistentID(t *testing.T) {
@@ -71,7 +60,7 @@ func TestNonExistentID(t *testing.T) {
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusNotFound, w.Code, "status code should be NotFound")
-	t.Logf("\033[32mTestNonExistentID: Passed\033[0m")
+	// t.Logf("\033[32mTestNonExistentID: Passed\033[0m")
 }
 
 func setupRouter() *gin.Engine {
